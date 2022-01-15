@@ -12,8 +12,9 @@ public class Dice {
 
     public int rollDice()
     {
-        Random random = new Random();
-        int i = random.nextInt(side);
+        int min = 1;
+        int max = getSide();
+        int i = (int)(Math.random()*(max-min+1)+min);
         System.out.println("Rolled and got "+ i);
         return i;
     }

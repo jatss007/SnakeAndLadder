@@ -19,6 +19,8 @@ public class HumanPlayer implements Player {
     public Move makeMove(PlayerState state) {
         try {
             Integer finalRolledValue = dice.stream().map(dice -> dice.rollDice()).reduce(0, Integer::sum);
+
+
             System.out.println(name + ": Rolled a "+ dice.size()+ " dice and got " + finalRolledValue );
             return new SnakeAndLadderMove(finalRolledValue);
         } catch (Exception ignored) {

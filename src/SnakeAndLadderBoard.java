@@ -31,14 +31,16 @@ public class SnakeAndLadderBoard {
 
     }
 
-    public boolean hasWinner() {
-        return map.values().stream().anyMatch(value -> value == 100);
+    public boolean isWinner(Player player) {
+        return map.entrySet().stream().anyMatch(e -> ((Player) e.getKey()).getName().equals(player.getName()) && e.getValue() == 100);
     }
 
-    public void set(SnakeAndLadderMove snakeAndLadderMove, Player currentPlayer) {
+    public void set(SnakeAndLadderMove snakeAndLadderMove, Player currentPlayer) throws InvalidMoveException {
         int currentPost = map.getOrDefault(currentPlayer, 0);
         int newPost = getNewPost(currentPost, snakeAndLadderMove.getRoll());
         System.out.println(currentPlayer.getName() + " moved from " + currentPost + " to " + newPost);
+        if(newPost > 100)
+            throw new InvalidMoveException("New Position can't be greater than");
         map.put(currentPlayer, newPost);
     }
 
@@ -69,5 +71,9 @@ public class SnakeAndLadderBoard {
                 return laddersPos[i][1];
         }
         return -1;
+    }
+
+    public long getNoOfPlayerCleared() {
+        return map.values().stream().filter(value -> value == 100).count();
     }
 }

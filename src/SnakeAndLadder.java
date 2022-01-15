@@ -23,16 +23,27 @@ public class SnakeAndLadder extends Game {
         if (!(move instanceof SnakeAndLadderMove)) {
             return;
         }
-        SnakeAndLadderMove snakeAndLadderMove = (SnakeAndLadderMove) move;
-        board.set(snakeAndLadderMove,  players.get(currentPlayerIndex));
-        currentPlayerIndex = (currentPlayerIndex + 1) % players.size();
+        try {
+            SnakeAndLadderMove snakeAndLadderMove = (SnakeAndLadderMove) move;
+            board.set(snakeAndLadderMove,  players.get(currentPlayerIndex));
+            currentPlayerIndex = (currentPlayerIndex + 1) % players.size();
+        }
+        catch (InvalidMoveException e){
+            return;
+        }
+
     }
 
     @Override void displayGame() {
     }
 
-    @Override protected boolean hasWinner() {
-        return board.hasWinner();
+    @Override
+    protected boolean hasWinner() {
+        return board.isWinner(players.get(currentPlayerIndex));
+    }
+
+    private long noOfPlayerCleared() {
+        return board.getNoOfPlayerCleared();
     }
 
     @Override protected Player getCurrentPlayer() {
@@ -45,6 +56,10 @@ public class SnakeAndLadder extends Game {
 
     @Override protected PlayerState getPlayerState(Player currentPlayer) {
         return null;
+    }
+
+    @Override protected boolean stopGame() {
+        return (noOfPlayerCleared() == players.size() -1);
     }
 
 }

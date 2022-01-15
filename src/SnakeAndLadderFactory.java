@@ -27,7 +27,13 @@ public class SnakeAndLadderFactory {
         board.setSnakesPos(snakesPos);
         board.setLaddersPos(laddersPos);
 
-        Dice dice = new Dice(6);
+        System.out.println("Enter no. of dices");
+        int diceCount = sc.nextInt();
+        List<Dice> dices = new ArrayList<>();
+        for (int i=0; i< diceCount; i++){
+            int diceSides = sc.nextInt();
+            dices.add(new Dice(diceSides));
+        }
 
         System.out.println("Enter no. of players");
         int noOfPlayers = sc.nextInt();
@@ -35,8 +41,8 @@ public class SnakeAndLadderFactory {
         sc.nextLine();
         for (int i=0;i<noOfPlayers; i++) {
             String name = sc.nextLine();
-            players.add(new HumanPlayer(name, Arrays.asList(dice)));
+            players.add(new HumanPlayer(name, dices));
         }
-        return new SnakeAndLadder(board, Arrays.asList(dice), players);
+        return new SnakeAndLadder(board, dices, players);
     }
 }

@@ -7,6 +7,7 @@ public abstract class Game {
     protected abstract Player getCurrentPlayer();
     protected abstract String getName();
     protected abstract PlayerState getPlayerState(Player currentPlayer);
+    protected abstract boolean stopGame();
 
     void play(){
         System.out.println("Starting game + "+ getName());
@@ -15,13 +16,17 @@ public abstract class Game {
         do {
             displayGame();
             Player currentPlayer = getCurrentPlayer();
+            if(hasWinner() && !stopGame()) {
+                continue;
+            }
             PlayerState playerState = getPlayerState(currentPlayer);
             Move move = currentPlayer.makeMove(playerState);
             makeMove(move);
+            if(hasWinner())
+                System.out.println(getCurrentPlayer().getName() +": has cleared \n Boom ");
         }
-        while(!hasWinner());
+        while(!stopGame());
 
-        System.out.println(getCurrentPlayer().getName() +": has won \n Boom ");
 
 
     }
