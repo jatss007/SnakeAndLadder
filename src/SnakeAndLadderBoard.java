@@ -1,6 +1,4 @@
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class SnakeAndLadderBoard {
@@ -38,10 +36,10 @@ public class SnakeAndLadderBoard {
     public void set(SnakeAndLadderMove snakeAndLadderMove, Player currentPlayer) throws InvalidMoveException {
         int currentPost = map.getOrDefault(currentPlayer, 0);
         int newPost = getNewPost(currentPost, snakeAndLadderMove.getRoll());
-        System.out.println(currentPlayer.getName() + " moved from " + currentPost + " to " + newPost);
+        System.out.println(" moved from " + currentPost + " to " + newPost);
         if(newPost > 100)
             throw new InvalidMoveException("New Position can't be greater than");
-        map.put(currentPlayer, newPost);
+        updatePost(currentPlayer, newPost);
     }
 
     private int getNewPost(int currentPost, int roll) {
@@ -75,5 +73,9 @@ public class SnakeAndLadderBoard {
 
     public long getNoOfPlayerCleared() {
         return map.values().stream().filter(value -> value == 100).count();
+    }
+
+    public void updatePost(Player currentPlayer, int newPost) {
+        map.put(currentPlayer, newPost);
     }
 }

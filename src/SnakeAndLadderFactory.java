@@ -41,7 +41,7 @@ public class SnakeAndLadderFactory {
         sc.nextLine();
         for (int i=0;i<noOfPlayers; i++) {
             String name = sc.nextLine();
-            players.add(new HumanPlayer(name, dices));
+            players.add(new HumanPlayer(name, dices, new BasicRollingStrategyImpl()));
         }
         return new SnakeAndLadder(board, dices, players);
     }
